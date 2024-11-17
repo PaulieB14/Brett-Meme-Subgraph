@@ -234,3 +234,25 @@ export function handlemarketingWalletUpdated(event: marketingWalletUpdatedEvent)
   entity.transactionHash = event.transaction.hash;
   entity.save();
 }
+
+// New handlers for analytics and settings
+export function handleTransferForAnalytics(event: TransferEvent): void {
+  let analytics = getTokenAnalytics();
+  analytics.totalTransfers = analytics.totalTransfers.plus(BigInt.fromI32(1));
+  analytics.blockTimestamp = event.block.timestamp;
+  analytics.save();
+}
+
+export function handleTokensAirdroppedForAnalytics(event: TokensAirdroppedEvent): void {
+  let analytics = getTokenAnalytics();
+  analytics.totalAirdropped = analytics.totalAirdropped.plus(event.params.totalTokens);
+  analytics.blockTimestamp = event.block.timestamp;
+  analytics.save();
+}
+
+export function handleOwnershipTransferredForSettings(event: OwnershipTransferredEvent): void {
+  let settings = getGlobalSettings();
+  settings.tradingActive = true; // Example update
+  settings.blockTimestamp = event.block.timestamp;
+  settings.save();
+}
