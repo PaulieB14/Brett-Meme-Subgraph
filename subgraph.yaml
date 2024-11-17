@@ -56,9 +56,8 @@ dataSources:
           handler: handleliquidityWalletUpdated
         - event: marketingWalletUpdated(indexed address,indexed address)
           handler: handlemarketingWalletUpdated
-      callHandlers:
-        - function: buyTotalFees()
-          handler: handleBuyFees
-        - function: sellTotalFees()
-          handler: handleSellFees
+        - event: SetBuyFees(uint256,uint256,uint256)
+          handler: handleSetBuyFees
+        - event: SetSellFees(uint256,uint256,uint256)
+          handler: handleSetSellFees
       file: ./src/brett-token.ts
