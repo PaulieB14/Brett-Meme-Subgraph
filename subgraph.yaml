@@ -1,0 +1,56 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: BrettToken
+    network: base
+    source:
+      address: "0x532f27101965dd16442E59d40670FaF5eBB142E4"
+      abi: BrettToken
+      startBlock: 10983962
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - ExcludeFromFees
+        - ExcludeFromLimits
+        - OwnershipTransferred
+        - SetAutomatedMarketMakerPair
+        - SwapAndLiquify
+        - TokensAirdropped
+        - Transfer
+        - developmentWalletUpdated
+        - liquidityWalletUpdated
+        - marketingWalletUpdated
+      abis:
+        - name: BrettToken
+          file: ./abis/BrettToken.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: ExcludeFromFees(indexed address,bool)
+          handler: handleExcludeFromFees
+        - event: ExcludeFromLimits(indexed address,bool)
+          handler: handleExcludeFromLimits
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: SetAutomatedMarketMakerPair(indexed address,indexed bool)
+          handler: handleSetAutomatedMarketMakerPair
+        - event: SwapAndLiquify(uint256,uint256,uint256)
+          handler: handleSwapAndLiquify
+        - event: TokensAirdropped(uint256,uint256)
+          handler: handleTokensAirdropped
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: developmentWalletUpdated(indexed address,indexed address)
+          handler: handledevelopmentWalletUpdated
+        - event: liquidityWalletUpdated(indexed address,indexed address)
+          handler: handleliquidityWalletUpdated
+        - event: marketingWalletUpdated(indexed address,indexed address)
+          handler: handlemarketingWalletUpdated
+      file: ./src/brett-token.ts

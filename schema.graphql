@@ -1,0 +1,101 @@
+type Approval @entity(immutable: true) {
+  id: Bytes!
+  owner: Bytes! # address
+  spender: Bytes! # address
+  value: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ExcludeFromFees @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  isExcluded: Boolean! # bool
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ExcludeFromLimits @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  isExcluded: Boolean! # bool
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OwnershipTransferred @entity(immutable: true) {
+  id: Bytes!
+  previousOwner: Bytes! # address
+  newOwner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetAutomatedMarketMakerPair @entity(immutable: true) {
+  id: Bytes!
+  pair: Bytes! # address
+  value: Boolean! # bool
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SwapAndLiquify @entity(immutable: true) {
+  id: Bytes!
+  tokensSwapped: BigInt! # uint256
+  ethReceived: BigInt! # uint256
+  tokensIntoLiquidity: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TokensAirdropped @entity(immutable: true) {
+  id: Bytes!
+  totalWallets: BigInt! # uint256
+  totalTokens: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Transfer @entity(immutable: true) {
+  id: Bytes!
+  from: Bytes! # address
+  to: Bytes! # address
+  value: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type developmentWalletUpdated @entity(immutable: true) {
+  id: Bytes!
+  newWallet: Bytes! # address
+  oldWallet: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type liquidityWalletUpdated @entity(immutable: true) {
+  id: Bytes!
+  newWallet: Bytes! # address
+  oldWallet: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type marketingWalletUpdated @entity(immutable: true) {
+  id: Bytes!
+  newWallet: Bytes! # address
+  oldWallet: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
