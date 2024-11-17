@@ -27,9 +27,9 @@ dataSources:
         - developmentWalletUpdated
         - liquidityWalletUpdated
         - marketingWalletUpdated
-        - TokenAnalytics         # NEW ENTITY
-        - Holder                 # NEW ENTITY
-        - GlobalSettings         # NEW ENTITY
+        - TokenAnalytics
+        - Holder
+        - GlobalSettings
       abis:
         - name: BrettToken
           file: ./abis/BrettToken.json
@@ -56,11 +56,4 @@ dataSources:
           handler: handleliquidityWalletUpdated
         - event: marketingWalletUpdated(indexed address,indexed address)
           handler: handlemarketingWalletUpdated
-        # NEW HANDLERS FOR CUSTOM ENTITIES
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransferForAnalytics
-        - event: TokensAirdropped(uint256,uint256)
-          handler: handleTokensAirdroppedForAnalytics
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handleOwnershipTransferredForSettings
       file: ./src/brett-token.ts
