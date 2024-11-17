@@ -129,4 +129,3 @@ type GlobalSettings @entity {
   swapEnabled: Boolean!          # Whether swapping is enabled
   blockTimestamp: BigInt!        # Last update time
 }
-ß
