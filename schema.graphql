@@ -99,3 +99,32 @@ type marketingWalletUpdated @entity(immutable: true) {
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
+
+type TokenAnalytics @entity {
+  id: ID!                        # A fixed ID for global analytics (e.g., "analytics")
+  totalTransfers: BigInt!        # Total number of transfer events
+  totalAirdropped: BigInt!       # Total tokens airdropped
+  uniqueHolders: Int!            # Number of unique holders
+  totalSupply: BigInt!           # Current total supply
+  totalLiquidityAdded: BigInt!   # Total tokens added to liquidity
+  totalBurned: BigInt!           # Total tokens burned (if applicable)
+  blockTimestamp: BigInt!        # Last update time
+}
+
+type Holder @entity {
+  id: Bytes!                     # Wallet address
+  balance: BigInt!               # Current token balance
+  totalReceived: BigInt!         # Total tokens received
+  totalSent: BigInt!             # Total tokens sent
+  transactionCount: Int!         # Number of transactions involving this holder
+}
+
+type GlobalSettings @entity {
+  id: ID!                        # A fixed ID for global settings (e.g., "settings")
+  buyFees: BigInt!               # Current buy fees
+  sellFees: BigInt!              # Current sell fees
+  maxTransaction: BigInt!        # Maximum transaction limit
+  maxWallet: BigInt!             # Maximum wallet holding limit
+  tradingActive: Boolean!        # Whether trading is active
+  swapEnabled: Boolean!          # Whether swapping is enabled
+}
