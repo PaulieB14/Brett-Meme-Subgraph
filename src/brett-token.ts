@@ -4,7 +4,6 @@ import {
   ExcludeFromLimits as ExcludeFromLimitsEvent,
   OwnershipTransferred as OwnershipTransferredEvent,
   SetAutomatedMarketMakerPair as SetAutomatedMarketMakerPairEvent,
-  SetBuyFees as SetBuyFeesEvent,
   SwapAndLiquify as SwapAndLiquifyEvent,
   TokensAirdropped as TokensAirdroppedEvent,
   Transfer as TransferEvent,
@@ -27,7 +26,6 @@ import {
   marketingWalletUpdated,
   TokenAnalytics,
   Holder,
-  GlobalSettings,
 } from "../generated/schema";
 
 import { BigInt, Bytes } from "@graphprotocol/graph-ts";
@@ -61,22 +59,6 @@ function getHolder(address: Bytes): Holder {
     holder.save();
   }
   return holder;
-}
-
-function getGlobalSettings(): GlobalSettings {
-  let settings = GlobalSettings.load("settings");
-  if (!settings) {
-    settings = new GlobalSettings("settings");
-    settings.buyFees = BigInt.zero();
-    settings.sellFees = BigInt.zero();
-    settings.maxTransaction = BigInt.zero();
-    settings.maxWallet = BigInt.zero();
-    settings.tradingActive = true;
-    settings.swapEnabled = true;
-    settings.blockTimestamp = BigInt.zero();
-    settings.save();
-  }
-  return settings;
 }
 
 /** Event Handlers **/
@@ -125,13 +107,6 @@ export function handleTransfer(event: TransferEvent): void {
   }
 }
 
-export function handleSetBuyFees(event: SetBuyFeesEvent): void {
-  let settings = getGlobalSettings();
-  settings.buyFees = event.params.buyFees;
-  settings.blockTimestamp = event.block.timestamp;
-  settings.save();
-}
-
 export function handleExcludeFromFees(event: ExcludeFromFeesEvent): void {
   let entity = new ExcludeFromFees(event.transaction.hash.concatI32(event.logIndex.toI32()));
   entity.account = event.params.account;
@@ -160,11 +135,6 @@ export function handleOwnershipTransferred(event: OwnershipTransferredEvent): vo
   entity.blockTimestamp = event.block.timestamp;
   entity.transactionHash = event.transaction.hash;
   entity.save();
-
-  let settings = getGlobalSettings();
-  settings.tradingActive = true;
-  settings.blockTimestamp = event.block.timestamp;
-  settings.save();
 }
 
 export function handleSetAutomatedMarketMakerPair(event: SetAutomatedMarketMakerPairEvent): void {
@@ -236,26 +206,4 @@ export function handlemarketingWalletUpdated(event: marketingWalletUpdatedEvent)
   entity.blockTimestamp = event.block.timestamp;
   entity.transactionHash = event.transaction.hash;
   entity.save();
-}
-
-// New handlers for analytics and settings
-export function handleTransferForAnalytics(event: TransferEvent): void {
-  let analytics = getTokenAnalytics();
-  analytics.totalTransfers = analytics.totalTransfers.plus(BigInt.fromI32(1));
-  analytics.blockTimestamp = event.block.timestamp;
-  analytics.save();
-}
-
-export function handleTokensAirdroppedForAnalytics(event: TokensAirdroppedEvent): void {
-  let analytics = getTokenAnalytics();
-  analytics.totalAirdropped = analytics.totalAirdropped.plus(event.params.totalTokens);
-  analytics.blockTimestamp = event.block.timestamp;
-  analytics.save();
-}
-
-export function handleOwnershipTransferredForSettings(event: OwnershipTransferredEvent): void {
-  let settings = getGlobalSettings();
-  settings.tradingActive = true; // Example update
-  settings.blockTimestamp = event.block.timestamp;
-  settings.save();
 }

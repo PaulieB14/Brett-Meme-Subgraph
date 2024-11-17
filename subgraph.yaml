@@ -29,7 +29,6 @@ dataSources:
         - marketingWalletUpdated
         - TokenAnalytics
         - Holder
-        - GlobalSettings
       abis:
         - name: BrettToken
           file: ./abis/BrettToken.json
@@ -56,8 +55,4 @@ dataSources:
           handler: handleliquidityWalletUpdated
         - event: marketingWalletUpdated(indexed address,indexed address)
           handler: handlemarketingWalletUpdated
-        - event: SetBuyFees(uint256,uint256,uint256)
-          handler: handleSetBuyFees
-        - event: SetSellFees(uint256,uint256,uint256)
-          handler: handleSetSellFees
       file: ./src/brett-token.ts

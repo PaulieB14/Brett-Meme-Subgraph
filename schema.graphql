@@ -119,13 +119,4 @@ type Holder @entity {
   transactionCount: Int!         # Number of transactions involving this holder
 }
 
-type GlobalSettings @entity {
-  id: ID!                        # A fixed ID for global settings (e.g., "settings")
-  buyFees: BigInt!               # Current buy fees
-  sellFees: BigInt!              # Current sell fees
-  maxTransaction: BigInt!        # Maximum transaction limit
-  maxWallet: BigInt!             # Maximum wallet holding limit
-  tradingActive: Boolean!        # Whether trading is active
-  swapEnabled: Boolean!          # Whether swapping is enabled
-  blockTimestamp: BigInt!        # Last update time
-}
+
