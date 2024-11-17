@@ -127,4 +127,5 @@ type GlobalSettings @entity {
   maxWallet: BigInt!             # Maximum wallet holding limit
   tradingActive: Boolean!        # Whether trading is active
   swapEnabled: Boolean!          # Whether swapping is enabled
+  blockTimestamp
 }

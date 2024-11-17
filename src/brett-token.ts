@@ -29,6 +29,8 @@ import {
   GlobalSettings,
 } from "../generated/schema";
 
+import { BigInt, Bytes } from "@graphprotocol/graph-ts";
+
 /** Helper Functions **/
 
 function getTokenAnalytics(): TokenAnalytics {
@@ -42,18 +44,20 @@ function getTokenAnalytics(): TokenAnalytics {
     analytics.totalLiquidityAdded = BigInt.zero();
     analytics.totalBurned = BigInt.zero();
     analytics.blockTimestamp = BigInt.zero();
+    analytics.save(); // Save the new entity
   }
   return analytics;
 }
 
 function getHolder(address: Bytes): Holder {
-  let holder = Holder.load(address.toHex());
+  let holder = Holder.load(Bytes.fromHexString(address.toHexString()));
   if (!holder) {
-    holder = new Holder(address.toHex());
+    holder = new Holder(address);
     holder.balance = BigInt.zero();
     holder.totalReceived = BigInt.zero();
     holder.totalSent = BigInt.zero();
     holder.transactionCount = 0;
+    holder.save(); // Save the new entity
   }
   return holder;
 }
@@ -68,6 +72,8 @@ function getGlobalSettings(): GlobalSettings {
     settings.maxWallet = BigInt.zero();
     settings.tradingActive = true;
     settings.swapEnabled = true;
+    settings.blockTimestamp = BigInt.zero();
+    settings.save(); // Save the new entity
   }
   return settings;
 }
@@ -193,7 +199,7 @@ export function handleTransfer(event: TransferEvent): void {
   receiver.transactionCount += 1;
   receiver.save();
 
-  if (!Holder.load(event.params.to.toHex())) {
+  if (!Holder.load(Bytes.fromHexString(event.params.to.toHexString()))) {
     analytics.uniqueHolders += 1;
     analytics.save();
   }
