@@ -1,14 +1,20 @@
-This project deploys a subgraph for the **Based Brett** meme coin on the Base blockchain. The goal is to track token-related activities such as transfers, approvals, fee exclusions, and other events. This subgraph enables analytics, community transparency, and token interaction insights.
+# **Based Brett Subgraph**
+
+This project deploys a subgraph for the **Based Brett** meme coin on the Base blockchain. The goal is to track token-related activities such as transfers, approvals, fee exclusions, and other events. This subgraph enables analytics, community transparency, and token interaction insights.
+
+---
 
 ### **Website and Token Contract**
 
-- **Official Website**: https://www.basedbrett.com/#tokenomics
-- **Token Contract**: [0x532f27101965dd16442e59d40670faf5ebb142e4](https://basescan.org/token/0x532f27101965dd16442e59d40670faf5ebb142e4)
+- **Official Website**: [https://www.basedbrett.com/#tokenomics](https://www.basedbrett.com/#tokenomics)
+- **Token Contract**: [0x532f27101965dd16442e59d40670faf5ebb142e4](https://basescan.org/token/0x532f27101965dd16442e59d40670faf5ebb142e4)
 
-# Example Queries for Subgraph
+---
 
+## **Example Queries for Subgraph**
+
+### **Ownership History**
 ```graphql
-# Ownership History
 {
   ownershipTransferreds(orderBy: blockTimestamp, orderDirection: asc) {
     id
@@ -17,7 +23,12 @@ This project deploys a subgraph for the **Based Brett** meme coin on the Base 
     blockTimestamp
     transactionHash
   }
-  # Transfers
+}
+```
+
+
+  ### Transfers
+  ```graphql
   transfers(first: 5, orderBy: blockTimestamp, orderDirection: desc) {
     id
     from
@@ -27,7 +38,9 @@ This project deploys a subgraph for the **Based Brett** meme coin on the Base 
     blockTimestamp
     transactionHash
   }
-  # Marketmaker
+```
+  ### Marketmaker
+  ```graphql
   setAutomatedMarketMakerPairs(first: 5, orderBy: blockTimestamp, orderDirection: desc) {
     id
     pair
@@ -35,7 +48,9 @@ This project deploys a subgraph for the **Based Brett** meme coin on the Base 
     blockTimestamp
     transactionHash
   }
-  # Ownership Transfers
+```
+  ### Ownership Transfers
+  ```graphql
   ownershipTransferreds(first: 5, orderBy: blockTimestamp, orderDirection: desc) {
     id
     previousOwner
@@ -43,7 +58,9 @@ This project deploys a subgraph for the **Based Brett** meme coin on the Base 
     blockTimestamp
     transactionHash
   }
-  # Top Token Holders
+```
+  ### Top Token Holders
+  ```graphql
   holders(first: 10, orderBy: balance, orderDirection: desc) {
     id
     balance
@@ -51,7 +68,9 @@ This project deploys a subgraph for the **Based Brett** meme coin on the Base 
     totalSent
     transactionCount
   }
-  # Transfers Between Two Addresses
+```
+  ### Transfers Between Two Addresses
+  ```graphql
   transfers(
     where: { from: "0xAddress1", to: "0xAddress2" }
     orderBy: blockTimestamp
@@ -62,7 +81,9 @@ This project deploys a subgraph for the **Based Brett** meme coin on the Base 
     blockTimestamp
     transactionHash
   }
-  # Fetch Token Metrics with Dynamic
+```
+  #### Fetch Token Metrics with Dynamic
+  ```graphql
   transfers(where: { value_gt: "1000000000000000000" }, orderBy: value, orderDirection: desc) {
     id
     from
@@ -71,4 +92,5 @@ This project deploys a subgraph for the **Based Brett** meme coin on the Base 
     blockTimestamp
   }
 }
+```
 
