@@ -82,7 +82,7 @@ This project deploys a subgraph for the **Based Brett** meme coin on the Base bl
     transactionHash
   }
 ```
-  #### Fetch Token Metrics with Dynamic
+  ### Fetch Token Metrics with Dynamic
   ```graphql
   transfers(where: { value_gt: "1000000000000000000" }, orderBy: value, orderDirection: desc) {
     id
